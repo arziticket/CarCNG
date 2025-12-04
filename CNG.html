@@ -1,0 +1,171 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Star CNG & Auto Services</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+
+  <style>
+    body { scroll-behavior: smooth; }
+    .hero {
+      background: url('img/michael-lock-7QjAXs55AuY-unsplash.jpg?auto=format&fit=crop&w=100&q=80') center/cover no-repeat;
+      height: 60vh;
+      color: white;
+      position: relative;
+    }
+    .hero-overlay {
+      background: rgba(0, 0, 0, 0.5);
+      position: absolute;
+      inset: 0;
+    }
+    .hero-content {
+      position: relative;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+    .services .card img {
+      height: 220px;
+      object-fit: cover;
+    }
+  </style>
+</head>
+<body>
+
+<!-- NAVBAR -->
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
+  <div class="container">
+    <a class="navbar-brand" href="#">Star CNG & Auto</a>
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navMenu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navMenu">
+      <ul class="navbar-nav ms-auto">
+        <li class="nav-item"><a class="nav-link" href="#services">Services</a></li>
+        <li class="nav-item"><a class="nav-link" href="#about">About Us</a></li>
+        <li class="nav-item"><a class="nav-link" href="#contact">Contact</a></li>
+      </ul>
+    </div>
+  </div>
+</nav>
+
+<!-- HERO -->
+<header class="hero d-flex align-items-center">
+  <div class="hero-overlay"></div>
+  <div class="container text-center hero-content">
+    <h1 class="display-4 fw-bold">Star CNG & Auto Services</h1>
+    <p class="lead mb-4">Expert CNG Fitting & Auto Repair For All Cars</p>   
+  </div>
+</header>
+
+<!-- SERVICES -->
+<section class="services py-5" id="services">
+  <div class="container">
+    <div class="text-center mb-5">
+      <h2 class="fw-bold">Our Services</h2>
+      <p class="text-muted">Professional auto care & certified CNG fitting</p>
+    </div>
+
+    <div class="row g-4">
+      
+      <div class="col-md-4">
+        <div class="card shadow-sm border-0">
+          <img src="https://images.unsplash.com/photo-1503376780353-7e6692767b70?auto=format&fit=crop&w=800&q=80" class="card-img-top" alt="CNG Fitting">
+          <div class="card-body">
+            <h5 class="card-title">CNG Fitting & Conversion</h5>
+            <p class="card-text">Certified CNG kit installation with safety inspection and performance tuning.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card shadow-sm border-0">
+          <img src="img/christian-buehner-Fd6osyVbtG4-unsplash.jpg" class="card-img-top" alt="Auto Repair">
+          <div class="card-body">
+            <h5 class="card-title">General Auto Repair</h5>
+            <p class="card-text">Engine diagnostics, oil change, brake repair, and routine vehicle maintenance.</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="col-md-4">
+        <div class="card shadow-sm border-0">
+          <img src="img/joshua-aragon-SlgLD4_drDA-unsplash.jpg" class="card-img-top" alt="Inspection">
+          <div class="card-body">
+            <h5 class="card-title">Safety & Leak Inspection</h5>
+            <p class="card-text">Full system leak test, emission check, and post-installation quality assurance.</p>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- ABOUT -->
+<section class="py-5 bg-light" id="about">
+  <div class="container">
+    <div class="row align-items-center g-4">
+      
+      <div class="col-md-6">
+        <img src="img/kenny-eliason-2K_-PG95qlI-unsplash.jpg" class="img-fluid rounded shadow" alt="Workshop">
+      </div>
+
+      <div class="col-md-6">
+        <h2 class="fw-bold">Why Choose Star CNG?</h2>
+        <p>We are specialists in CNG fitting with 10+ years of experience and certified technicians. Our workshop provides reliable, safe, and cost-effective solutions for all types of vehicles.</p>
+        <ul>
+          <li>Certified engineers</li>
+          <li>Top-quality CNG kits</li>
+          <li>Fast installation</li>
+          <li>Honest pricing</li>
+          <li>Lifetime support</li>
+        </ul>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+<!-- CONTACT -->
+<section class="py-5" id="contact">
+  <div class="container">
+    <div class="text-center mb-4">
+      <h2 class="fw-bold">Contact Us</h2>
+      <p class="text-muted">We are here to assist you</p>
+    </div>
+
+    <div class="row g-4">
+
+      <div class="col-md-6">
+        <h5>Address</h5>
+        <p>1234 Auto Lane,<br>Springfield, IL 62704</p>
+
+        <h5>Phone</h5>
+        <p><a href="tel:+15551234567">+1 (555) 123-4567</a></p>
+
+        <h5>Email</h5>
+        <p><a href="mailto:contact@starcng.com">contact@starcng.com</a></p>
+      </div>
+
+      <div class="col-md-6">
+        <iframe src="https://maps.google.com/maps?q=Springfield%20IL&t=&z=13&ie=UTF8&iwloc=&output=embed"
+          width="100%" height="250" style="border:0;" loading="lazy"></iframe>
+      </div>
+
+    </div>
+
+    <div class="text-center mt-4">
+      <a href="tel:+15551234567" class="btn btn-success btn-lg">Call Now</a>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="text-center bg-dark text-white py-3">
+  <p class="mb-0">&copy; 2025 Star CNG & Auto Services</p>
+</footer>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+</body>
+</html>
