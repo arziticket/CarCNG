@@ -1,0 +1,279 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="light">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0" />
+  <title>City Bike Garage</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@500;600;700&family=Nunito:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+<!-- ===== TOP HEADER ===== -->
+<header class="app-header">
+  <div class="header-inner d-flex align-items-center justify-content-between px-3 py-2">
+    <div class="d-flex align-items-center gap-2">
+      <div class="garage-icon"><i class="bi bi-tools"></i></div>
+      <div>
+        <div class="garage-name">CITY BIKE GARAGE</div>
+        <div class="garage-addr"><i class="bi bi-geo-alt-fill"></i> Gathaman Patiya, Palanpur</div>
+      </div>
+    </div>
+    <button class="dark-toggle btn btn-sm" id="darkToggle" title="Toggle Dark Mode">
+      <i class="bi bi-moon-stars-fill"></i>
+    </button>
+  </div>
+</header>
+
+<!-- ===== PAGES ===== -->
+<main class="app-body" id="appBody">
+
+  <!-- ======== DASHBOARD PAGE ======== -->
+  <section class="page active" id="pageDashboard">
+    <div class="section-title px-3 pt-3 pb-1">
+      <span class="badge-live"><i class="bi bi-circle-fill"></i> Live Dashboard</span>
+    </div>
+
+    <!-- Stat Cards -->
+    <div class="stats-grid px-3 pt-1 pb-2">
+      <div class="stat-card stat-orange" onclick="goToPage('pageServices'); filterStatus('')">
+        <div class="stat-icon"><i class="bi bi-people-fill"></i></div>
+        <div class="stat-val" id="statCustomers">0</div>
+        <div class="stat-lbl">Customers</div>
+      </div>
+      <div class="stat-card stat-blue" onclick="goToPage('pageServices'); filterStatus('')">
+        <div class="stat-icon"><i class="bi bi-bicycle"></i></div>
+        <div class="stat-val" id="statVehicles">0</div>
+        <div class="stat-lbl">Vehicles</div>
+      </div>
+      <div class="stat-card stat-red" onclick="goToPage('pageServices'); filterStatus('Pending')">
+        <div class="stat-icon"><i class="bi bi-hourglass-split"></i></div>
+        <div class="stat-val" id="statPending">0</div>
+        <div class="stat-lbl">Pending</div>
+      </div>
+      <div class="stat-card stat-green" onclick="goToPage('pageServices'); filterStatus('Completed')">
+        <div class="stat-icon"><i class="bi bi-patch-check-fill"></i></div>
+        <div class="stat-val" id="statCompleted">0</div>
+        <div class="stat-lbl">Completed</div>
+      </div>
+    </div>
+
+    <!-- Revenue Card -->
+    <div class="px-3 pb-2">
+      <div class="revenue-card d-flex align-items-center justify-content-between">
+        <div>
+          <div class="rev-label">Today's Revenue</div>
+          <div class="rev-amount" id="todayRevenue">₹0</div>
+        </div>
+        <div class="rev-icon"><i class="bi bi-currency-rupee"></i></div>
+      </div>
+    </div>
+
+    <!-- Recent Services -->
+    <div class="section-sub-title px-3 pt-1 pb-1 d-flex justify-content-between align-items-center">
+      <span><i class="bi bi-clock-history"></i> Recent Services</span>
+      <span class="view-all-link" onclick="goToPage('pageServices')">View All <i class="bi bi-arrow-right"></i></span>
+    </div>
+    <div id="recentList" class="px-3 pb-24"></div>
+    <div id="dashEmptyState" class="empty-state px-3 pb-24 d-none">
+      <div class="empty-icon"><i class="bi bi-tools"></i></div>
+      <div class="empty-title">No Services Yet</div>
+      <div class="empty-sub">Tap + to add your first service entry</div>
+    </div>
+  </section>
+
+  <!-- ======== SERVICES LIST PAGE ======== -->
+  <section class="page" id="pageServices">
+    <div class="px-3 pt-3 pb-2">
+      <div class="search-bar d-flex align-items-center gap-2">
+        <i class="bi bi-search search-icon"></i>
+        <input type="text" id="searchInput" class="search-input" placeholder="Search by vehicle no. or mobile..." oninput="renderServiceList()" />
+        <button class="btn-clear-search" id="clearSearch" onclick="clearSearch()" title="Clear"><i class="bi bi-x-lg"></i></button>
+      </div>
+    </div>
+    <div class="filter-chips px-3 pb-2 d-flex gap-2 overflow-auto">
+      <button class="chip active" data-filter="" onclick="filterStatus('')">All</button>
+      <button class="chip" data-filter="Pending" onclick="filterStatus('Pending')">Pending</button>
+      <button class="chip" data-filter="Completed" onclick="filterStatus('Completed')">Completed</button>
+      <button class="chip" data-filter="Delivered" onclick="filterStatus('Delivered')">Delivered</button>
+    </div>
+    <div id="serviceList" class="px-3 pb-24"></div>
+    <div id="listEmptyState" class="empty-state px-3 pb-24 d-none">
+      <div class="empty-icon"><i class="bi bi-clipboard-x"></i></div>
+      <div class="empty-title">No Records Found</div>
+      <div class="empty-sub">Try a different search or filter</div>
+    </div>
+  </section>
+
+  <!-- ======== ADD / EDIT SERVICE PAGE ======== -->
+  <section class="page" id="pageAdd">
+    <div class="form-header px-3 pt-3 pb-2 d-flex align-items-center gap-2">
+      <button class="btn-back" onclick="cancelForm()"><i class="bi bi-arrow-left"></i></button>
+      <span class="form-title" id="formTitle">New Service Entry</span>
+    </div>
+
+    <form id="serviceForm" class="px-3 pb-24" autocomplete="off">
+      <input type="hidden" id="editId" />
+
+      <!-- Customer Info -->
+      <div class="form-section-label"><i class="bi bi-person-fill"></i> Customer Info</div>
+      <div class="mb-3">
+        <label class="form-label-custom">Customer Name *</label>
+        <input type="text" class="form-ctrl" id="fName" placeholder="Full name" required />
+      </div>
+      <div class="mb-3">
+        <label class="form-label-custom">Mobile Number *</label>
+        <input type="tel" class="form-ctrl" id="fMobile" placeholder="10-digit number" maxlength="10" required />
+      </div>
+
+      <!-- Vehicle Info -->
+      <div class="form-section-label mt-3"><i class="bi bi-bicycle"></i> Vehicle Info</div>
+      <div class="mb-3">
+        <label class="form-label-custom">Vehicle Number *</label>
+        <input type="text" class="form-ctrl" id="fVehicleNo" placeholder="e.g. GJ27AB1234" style="text-transform:uppercase" required />
+      </div>
+      <div class="row g-2 mb-3">
+        <div class="col-6">
+          <label class="form-label-custom">Brand</label>
+          <input type="text" class="form-ctrl" id="fBrand" placeholder="Honda, Hero..." />
+        </div>
+        <div class="col-6">
+          <label class="form-label-custom">Model</label>
+          <input type="text" class="form-ctrl" id="fModel" placeholder="Splendor, Activa..." />
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label-custom">KM Reading</label>
+        <input type="number" class="form-ctrl" id="fKm" placeholder="Current odometer reading" />
+      </div>
+
+      <!-- Service Info -->
+      <div class="form-section-label mt-3"><i class="bi bi-wrench-adjustable"></i> Service Info</div>
+      <div class="mb-3">
+        <label class="form-label-custom">Service Type</label>
+        <select class="form-ctrl" id="fServiceType">
+          <option value="">Select type...</option>
+          <option>General Service</option>
+          <option>Oil Change</option>
+          <option>Tyre Puncture</option>
+          <option>Brake Repair</option>
+          <option>Engine Repair</option>
+          <option>Electrical Work</option>
+          <option>Body Work</option>
+          <option>Battery Replacement</option>
+          <option>Chain/Sprocket</option>
+          <option>Full Overhaul</option>
+          <option>Other</option>
+        </select>
+      </div>
+      <div class="mb-3">
+        <label class="form-label-custom">Problem Description</label>
+        <textarea class="form-ctrl" id="fProblem" rows="2" placeholder="Customer complaint / problem reported..."></textarea>
+      </div>
+      <div class="mb-3">
+        <label class="form-label-custom">Work Done</label>
+        <textarea class="form-ctrl" id="fWorkDone" rows="2" placeholder="Work performed by mechanic..."></textarea>
+      </div>
+
+      <!-- Parts & Charges -->
+      <div class="form-section-label mt-3"><i class="bi bi-box-seam"></i> Parts & Charges</div>
+      <div class="mb-3">
+        <label class="form-label-custom">Spare Parts Used</label>
+        <textarea class="form-ctrl" id="fParts" rows="2" placeholder="List of spare parts..."></textarea>
+      </div>
+      <div class="row g-2 mb-3">
+        <div class="col-6">
+          <label class="form-label-custom">Parts Cost (₹)</label>
+          <input type="number" class="form-ctrl" id="fPartsCost" placeholder="0" min="0" oninput="calcTotal()" />
+        </div>
+        <div class="col-6">
+          <label class="form-label-custom">Service Charge (₹)</label>
+          <input type="number" class="form-ctrl" id="fServiceCharge" placeholder="0" min="0" oninput="calcTotal()" />
+        </div>
+      </div>
+      <div class="total-preview mb-3" id="totalPreview">
+        <span>Grand Total</span>
+        <span id="calcTotal">₹ 0</span>
+      </div>
+
+      <!-- Emergency & Status -->
+      <div class="form-section-label mt-3"><i class="bi bi-sliders"></i> Options</div>
+      <div class="mb-3 d-flex align-items-center justify-content-between">
+        <label class="form-label-custom mb-0">🚨 Emergency Service</label>
+        <div class="form-check form-switch mb-0">
+          <input class="form-check-input" type="checkbox" id="fEmergency" role="switch" />
+        </div>
+      </div>
+      <div class="mb-3">
+        <label class="form-label-custom">Status</label>
+        <select class="form-ctrl" id="fStatus">
+          <option value="Pending">Pending</option>
+          <option value="Completed">Completed</option>
+          <option value="Delivered">Delivered</option>
+        </select>
+      </div>
+
+      <button type="submit" class="btn-submit w-100" id="submitBtn">
+        <i class="bi bi-check-circle-fill me-2"></i>Save Service Entry
+      </button>
+    </form>
+  </section>
+
+</main>
+
+<!-- ===== FLOATING ADD BUTTON ===== -->
+<button class="fab" id="fabBtn" onclick="openAddForm()" title="Add Service">
+  <i class="bi bi-plus-lg"></i>
+</button>
+
+<!-- ===== BOTTOM NAV ===== -->
+<nav class="bottom-nav">
+  <button class="nav-btn active" data-page="pageDashboard" onclick="goToPage('pageDashboard')">
+    <i class="bi bi-speedometer2"></i>
+    <span>Dashboard</span>
+  </button>
+  <button class="nav-btn" data-page="pageServices" onclick="goToPage('pageServices')">
+    <i class="bi bi-list-ul"></i>
+    <span>Services</span>
+  </button>
+  <button class="nav-btn nav-btn-placeholder">
+    <!-- spacer for FAB -->
+    <span></span>
+  </button>
+</nav>
+
+<!-- ===== SERVICE DETAIL MODAL ===== -->
+<div class="modal fade" id="detailModal" tabindex="-1">
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content detail-modal-content">
+      <div class="modal-header detail-modal-header">
+        <div>
+          <div class="modal-vehicle-no" id="mVehicleNo"></div>
+          <div class="modal-customer" id="mCustomer"></div>
+        </div>
+        <button type="button" class="btn-modal-close" data-bs-dismiss="modal"><i class="bi bi-x-lg"></i></button>
+      </div>
+      <div class="modal-body pb-2" id="modalBody"></div>
+      <div class="modal-footer modal-actions gap-2">
+        <button class="btn-action btn-wa" id="mWaBtn" onclick="whatsappShare()"><i class="bi bi-whatsapp"></i> WhatsApp</button>
+        <button class="btn-action btn-bill" id="mBillBtn" onclick="printBill()"><i class="bi bi-printer-fill"></i> Print Bill</button>
+        <button class="btn-action btn-edit" id="mEditBtn" onclick="editFromModal()"><i class="bi bi-pencil-fill"></i> Edit</button>
+        <button class="btn-action btn-del" id="mDelBtn" onclick="deleteFromModal()"><i class="bi bi-trash3-fill"></i></button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===== PRINT BILL AREA (hidden, prints only) ===== -->
+<div id="billArea" style="display:none"></div>
+
+<!-- ===== TOAST ===== -->
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+<script src="script.js"></script>
+</body>
+</html>
